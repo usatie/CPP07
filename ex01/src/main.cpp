@@ -9,7 +9,7 @@
 #define BOLD "\033[1m"
 
 // print title in green color surrounded by '='
-void printTitle(std::string const& title) {
+void printTitle(std::string const &title) {
   // set color to green
   std::cout << GREEN << BOLD;
   // print '='
@@ -24,7 +24,7 @@ void printTitle(std::string const& title) {
 }
 
 // print test subtitle in white color surrounded by '-'
-void printSubtitle(std::string const& subtitle) {
+void printSubtitle(std::string const &subtitle) {
   // print '-'
   std::cout << std::setfill('-') << std::setw(80) << "" << std::endl;
   // print subtitle at the center
@@ -38,18 +38,26 @@ void printSubtitle(std::string const& subtitle) {
 
 // Print functions
 template <typename T>
-void print_T(T v) { std::cout << v << " "; }
+void print_T(T v) {
+  std::cout << v << " ";
+}
 template <typename T>
-void print_const_T(const T v) { std::cout << v << " "; }
+void print_const_T(const T v) {
+  std::cout << v << " ";
+}
 template <typename T>
-void print_ref_T(T &v) { std::cout << v << " "; }
+void print_ref_T(T &v) {
+  std::cout << v << " ";
+}
 template <typename T>
-void print_const_ref_T(const T &v) { std::cout << v << " "; }
+void print_const_ref_T(const T &v) {
+  std::cout << v << " ";
+}
 
 void print_int(int i) { std::cout << i << " "; }
 void print_const_int(int const i) { std::cout << i << " "; }
-void print_ref_int(int & i) { std::cout << i << " "; }
-void print_const_ref_int(int const& i) { std::cout << i << " "; }
+void print_ref_int(int &i) { std::cout << i << " "; }
+void print_const_ref_int(int const &i) { std::cout << i << " "; }
 
 /* ===========================================================================*/
 /*                               Primitive types                              */
@@ -162,7 +170,7 @@ void test_const_array_of_int_template() {
   printTitle("Test const array of int");
   {
     int array[] = {0, 1, 2, 3, 4};
-    int * const const_array = array;
+    int *const const_array = array;
     printSubtitle("Test function takes int");
     ::iter(const_array, 5, print_T<int>);
     std::cout << std::endl;
@@ -183,7 +191,7 @@ void test_const_array_of_const_int_template() {
   printTitle("Test const array of const int");
   {
     int array[] = {0, 1, 2, 3, 4};
-    int const * const const_array = array;
+    int const *const const_array = array;
     printSubtitle("Test function takes const int");
     ::iter(const_array, 5, print_T<const int>);
     std::cout << std::endl;
