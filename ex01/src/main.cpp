@@ -1,6 +1,8 @@
 #include <iomanip>
 #include <iostream>
 
+#include "iter.hpp"
+
 #define RESET "\033[m"
 #define GREEN "\033[0;32m"
 #define RED "\033[0;31m"
@@ -34,11 +36,179 @@ void printSubtitle(std::string const& subtitle) {
   std::cout << RESET << std::setfill(' ') << std::setw(0);
 }
 
-void test_from_subject() {
-  printTitle("Test from sunject pdf");
+// Print functions
+template <typename T>
+void print_T(T v) { std::cout << v << " "; }
+template <typename T>
+void print_const_T(const T v) { std::cout << v << " "; }
+template <typename T>
+void print_ref_T(T &v) { std::cout << v << " "; }
+template <typename T>
+void print_const_ref_T(const T &v) { std::cout << v << " "; }
+
+void print_int(int i) { std::cout << i << " "; }
+void print_const_int(int const i) { std::cout << i << " "; }
+void print_ref_int(int & i) { std::cout << i << " "; }
+void print_const_ref_int(int const& i) { std::cout << i << " "; }
+
+/* ===========================================================================*/
+/*                               Primitive types                              */
+/* ===========================================================================*/
+// Test int array with concrete functions
+void test_int_array() {
+  printTitle("Test int array");
+  {
+    int array[] = {0, 1, 2, 3, 4};
+    printSubtitle("Test function takes int");
+    ::iter(array, 5, print_int);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const");
+    ::iter(array, 5, print_const_int);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int &");
+    ::iter(array, 5, print_ref_int);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const &");
+    ::iter(array, 5, print_const_ref_int);
+    std::cout << std::endl;
+  }
+}
+
+// Test char array with template functions
+void test_char_array() {
+  printTitle("Test char array");
+  {
+    char array[] = {'a', 'b', 'c', 'd', 'e'};
+    printSubtitle("Test function takes char");
+    ::iter(array, 5, print_T<char>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char const");
+    ::iter(array, 5, print_const_T<char>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char &");
+    ::iter(array, 5, print_ref_T<char>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char const &");
+    ::iter(array, 5, print_const_ref_T<char>);
+    std::cout << std::endl;
+  }
+}
+
+// Test const char* array with template functions
+void test_const_char_array() {
+  printTitle("Test const char* array");
+  {
+    char const *array[] = {"a", "bb", "ccc", "dddd", "eeeee"};
+    printSubtitle("Test function takes char*");
+    ::iter(array, 5, print_T<const char *>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char* const");
+    ::iter(array, 5, print_const_T<const char *>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char* &");
+    ::iter(array, 5, print_ref_T<const char *>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes char* const &");
+    ::iter(array, 5, print_const_ref_T<const char *>);
+    std::cout << std::endl;
+  }
+}
+
+/* ===========================================================================*/
+/*                               Test with template                           */
+/* ===========================================================================*/
+// Test int array with template functions
+void test_int_array_template() {
+  printTitle("Test int array");
+  {
+    int array[] = {0, 1, 2, 3, 4};
+    printSubtitle("Test function takes int");
+    ::iter(array, 5, print_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const");
+    ::iter(array, 5, print_const_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int &");
+    ::iter(array, 5, print_ref_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const &");
+    ::iter(array, 5, print_const_ref_T<int>);
+    std::cout << std::endl;
+  }
+}
+
+// Test const int array with template functions
+void test_const_int_array_template() {
+  printTitle("Test const int array");
+  {
+    int const array[] = {0, 1, 2, 3, 4};
+    printSubtitle("Test function takes int");
+    ::iter(array, 5, print_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const");
+    ::iter(array, 5, print_const_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int &");
+    ::iter(array, 5, print_ref_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const &");
+    ::iter(array, 5, print_const_ref_T<const int>);
+    std::cout << std::endl;
+  }
+}
+
+// Test const array of int with template functions
+void test_const_array_of_int_template() {
+  printTitle("Test const array of int");
+  {
+    int array[] = {0, 1, 2, 3, 4};
+    int * const const_array = array;
+    printSubtitle("Test function takes int");
+    ::iter(const_array, 5, print_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const");
+    ::iter(const_array, 5, print_const_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int &");
+    ::iter(const_array, 5, print_ref_T<int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes int const &");
+    ::iter(const_array, 5, print_const_ref_T<int>);
+    std::cout << std::endl;
+  }
+}
+
+// Test const array of const int with template functions
+void test_const_array_of_const_int_template() {
+  printTitle("Test const array of const int");
+  {
+    int array[] = {0, 1, 2, 3, 4};
+    int const * const const_array = array;
+    printSubtitle("Test function takes const int");
+    ::iter(const_array, 5, print_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes const const int");
+    ::iter(const_array, 5, print_const_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes const int &");
+    ::iter(const_array, 5, print_ref_T<const int>);
+    std::cout << std::endl;
+    printSubtitle("Test function takes const int & const");
+    ::iter(const_array, 5, print_const_ref_T<const int>);
+    std::cout << std::endl;
+  }
 }
 
 int main(void) {
-  test_from_subject();
+  // Test primitive types
+  test_int_array();
+  test_char_array();
+  test_const_char_array();
+
+  // Test (T/const T/T &/const T &) functions
+  test_int_array_template();
+  test_const_int_array_template();
+  test_const_array_of_int_template();
+  test_const_array_of_const_int_template();
   return 0;
 }
