@@ -36,7 +36,7 @@ void printSubtitle(std::string const& subtitle) {
   std::cout << RESET << std::setfill(' ') << std::setw(0);
 }
 
-// Test
+// Test with int
 void testArray() {
   printTitle("Array");
 
@@ -81,12 +81,12 @@ void testArray() {
 
   printSubtitle("Exceptions");
   try {
-    std::cout << "a1[0] = " << a1[0] << std::endl;
-    std::cout << "a1[1] = " << a1[1] << std::endl;
-    std::cout << "a1[2] = " << a1[2] << std::endl;
-    std::cout << "a1[3] = " << a1[3] << std::endl;
-    std::cout << "a1[4] = " << a1[4] << std::endl;
-    std::cout << "a1[5] = " << a1[5] << std::endl;
+    std::cout << "a1[0]: " << a1[0] << std::endl;
+    std::cout << "a1[1]: " << a1[1] << std::endl;
+    std::cout << "a1[2]: " << a1[2] << std::endl;
+    std::cout << "a1[3]: " << a1[3] << std::endl;
+    std::cout << "a1[4]: " << a1[4] << std::endl;
+    std::cout << "a1[5]: " << a1[5] << std::endl;
   } catch (std::exception& e) {
     std::cout << "Exception: " << e.what() << std::endl;
   }
@@ -109,7 +109,81 @@ void testArray() {
   }
 }
 
+// Tests with string
+void testArrayString() {
+  printTitle("Array");
+
+  printSubtitle("Constructors");
+  Array<std::string> a1;
+  Array<std::string> a2(5);
+  Array<std::string> a3(a2);
+  Array<std::string> a4(0);
+
+  printSubtitle("Accessors");
+  std::cout << "a1.size() = " << a1.size() << std::endl;
+  std::cout << "a2.size() = " << a2.size() << std::endl;
+  std::cout << "a3.size() = " << a3.size() << std::endl;
+
+  printSubtitle("Operators");
+  for (unsigned int i = 0; i < a2.size(); i++) {
+    a2[i] = "Hello" + std::to_string(i);
+    std::cout << "a2[" << i << "] = " << a2[i] << std::endl;
+  }
+  for (unsigned int i = 0; i < a3.size(); i++) {
+    a3[i] = "World" + std::to_string(i);
+    std::cout << "a3[" << i << "] = " << a3[i] << std::endl;
+  }
+  {
+    const Array<std::string> a5 = a2;
+    for (unsigned int i = 0; i < a5.size(); i++) {
+      std::cout << "a5[" << i << "] = " << a5[i] << std::endl;
+    }
+  }
+
+  printSubtitle("Copy");
+  a1 = a2;
+  for (unsigned int i = 0; i < a1.size(); i++) {
+    std::cout << "a1[" << i << "] = " << a1[i] << std::endl;
+  }
+
+  printSubtitle("Output");
+  std::cout << "a1 = " << a1 << std::endl;
+  std::cout << "a2 = " << a2 << std::endl;
+  std::cout << "a3 = " << a3 << std::endl;
+  std::cout << "a4 = " << a4 << std::endl;
+
+  printSubtitle("Exceptions");
+  try {
+    std::cout << "a1[0]: " << a1[0] << std::endl;
+    std::cout << "a1[1]: " << a1[1] << std::endl;
+    std::cout << "a1[2]: " << a1[2] << std::endl;
+    std::cout << "a1[3]: " << a1[3] << std::endl;
+    std::cout << "a1[4]: " << a1[4] << std::endl;
+    std::cout << "a1[5]: " << a1[5] << std::endl;
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+
+  try {
+    std::cout << "a1[0] = \"HELLO0\";" << std::endl;
+    a1[0] = "HELLO0";
+    std::cout << "a1[1] = \"HELLO1\";" << std::endl;
+    a1[1] = "HELLO1";
+    std::cout << "a1[2] = \"HELLO2\";" << std::endl;
+    a1[2] = "HELLO2";
+    std::cout << "a1[3] = \"HELLO3\";" << std::endl;
+    a1[3] = "HELLO3";
+    std::cout << "a1[4] = \"HELLO4\";" << std::endl;
+    a1[4] = "HELLO4";
+    std::cout << "a1[5] = \"HELLO5\";" << std::endl;
+    a1[5] = "HELLO5";
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+}
+
 int main(void) {
   testArray();
+  testArrayString();
   return 0;
 }
