@@ -37,8 +37,8 @@ void printSubtitle(std::string const& subtitle) {
 }
 
 // Test with int
-void testArray() {
-  printTitle("Array");
+void testArrayInt() {
+  printTitle("Test int array");
 
   printSubtitle("Constructors");
   Array<int> a1;
@@ -111,7 +111,7 @@ void testArray() {
 
 // Tests with string
 void testArrayString() {
-  printTitle("Array");
+  printTitle("Test string array");
 
   printSubtitle("Constructors");
   Array<std::string> a1;
@@ -152,7 +152,7 @@ void testArrayString() {
   std::cout << "a3 = " << a3 << std::endl;
   std::cout << "a4 = " << a4 << std::endl;
 
-  printSubtitle("Exceptions");
+  printSubtitle("Exceptions []");
   try {
     std::cout << "a1[0]: " << a1[0] << std::endl;
     std::cout << "a1[1]: " << a1[1] << std::endl;
@@ -164,6 +164,7 @@ void testArrayString() {
     std::cout << "Exception: " << e.what() << std::endl;
   }
 
+  printSubtitle("Exceptions []");
   try {
     std::cout << "a1[0] = \"HELLO0\";" << std::endl;
     a1[0] = "HELLO0";
@@ -182,8 +183,165 @@ void testArrayString() {
   }
 }
 
+// Test const array with int
+void testConstArrayInt() {
+  printTitle("Test const array of int");
+
+  printSubtitle("Constructors");
+  const Array<int> a1;
+  const Array<int> a2(5);
+  const Array<int> a3(a2);
+  const Array<int> a4(0);
+
+  printSubtitle("Accessors");
+  std::cout << "a1.size() = " << a1.size() << std::endl;
+  std::cout << "a2.size() = " << a2.size() << std::endl;
+  std::cout << "a3.size() = " << a3.size() << std::endl;
+
+  printSubtitle("Operators");
+  /* Compile error
+  for (unsigned int i = 0; i < a2.size(); i++) {
+    a2[i] = i;
+    std::cout << "a2[" << i << "] = " << a2[i] << std::endl;
+  }
+  for (unsigned int i = 0; i < a3.size(); i++) {
+    a3[i] = i * 2;
+    std::cout << "a3[" << i << "] = " << a3[i] << std::endl;
+  }
+  */
+  {
+    const Array<int> a5 = a2;
+    for (unsigned int i = 0; i < a5.size(); i++) {
+      std::cout << "a5[" << i << "] = " << a5[i] << std::endl;
+    }
+  }
+
+  /* Compile error
+  printSubtitle("Copy");
+  a1 = a2;
+  for (unsigned int i = 0; i < a1.size(); i++) {
+    std::cout << "a1[" << i << "] = " << a1[i] << std::endl;
+  }
+  */
+
+  printSubtitle("Output");
+  std::cout << "a1 = " << a1 << std::endl;
+  std::cout << "a2 = " << a2 << std::endl;
+  std::cout << "a3 = " << a3 << std::endl;
+  std::cout << "a4 = " << a4 << std::endl;
+
+  printSubtitle("Exceptions");
+  try {
+    std::cout << "a1[0]: " << a1[0] << std::endl;
+    std::cout << "a1[1]: " << a1[1] << std::endl;
+    std::cout << "a1[2]: " << a1[2] << std::endl;
+    std::cout << "a1[3]: " << a1[3] << std::endl;
+    std::cout << "a1[4]: " << a1[4] << std::endl;
+    std::cout << "a1[5]: " << a1[5] << std::endl;
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+
+  /* compile error
+  try {
+    std::cout << "a1[0] = 0;" << std::endl;
+    a1[0] = 0;
+    std::cout << "a1[1] = 1;" << std::endl;
+    a1[1] = 1;
+    std::cout << "a1[2] = 2;" << std::endl;
+    a1[2] = 2;
+    std::cout << "a1[3] = 3;" << std::endl;
+    a1[3] = 3;
+    std::cout << "a1[4] = 4;" << std::endl;
+    a1[4] = 4;
+    std::cout << "a1[5] = 5;" << std::endl;
+    a1[5] = 5;
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+  */
+}
+
+
+// Test array with const char *
+void testArrayConstCharPointer() {
+  printTitle("Test array of const char *");
+
+  printSubtitle("Constructors");
+  const char * a[] = {"hello", "world", "42", "!", "welcome"} ;
+  const char * b[] = {"HELLO", "WORLD", "42", "!", "WELCOME"} ;
+  Array<const char *> a1;
+  Array<const char *> a2(5);
+  Array<const char *> a3(a2);
+  Array<const char *> a4(0);
+
+  printSubtitle("Accessors");
+  std::cout << "a1.size() = " << a1.size() << std::endl;
+  std::cout << "a2.size() = " << a2.size() << std::endl;
+  std::cout << "a3.size() = " << a3.size() << std::endl;
+
+  printSubtitle("Operators");
+  for (unsigned int i = 0; i < a2.size(); i++) {
+    a2[i] = a[i];
+    std::cout << "a2[" << i << "] = " << a2[i] << std::endl;
+  }
+  for (unsigned int i = 0; i < a3.size(); i++) {
+    a3[i] = b[i];
+    std::cout << "a3[" << i << "] = " << a3[i] << std::endl;
+  }
+  {
+    const Array<const char *> a5 = a2;
+    for (unsigned int i = 0; i < a5.size(); i++) {
+      std::cout << "a5[" << i << "] = " << a5[i] << std::endl;
+    }
+  }
+
+  printSubtitle("Copy");
+  a1 = a2;
+  for (unsigned int i = 0; i < a1.size(); i++) {
+    std::cout << "a1[" << i << "] = " << a1[i] << std::endl;
+  }
+
+  printSubtitle("Output");
+  std::cout << "a1 = " << a1 << std::endl;
+  std::cout << "a2 = " << a2 << std::endl;
+  std::cout << "a3 = " << a3 << std::endl;
+  std::cout << "a4 = " << a4 << std::endl;
+
+  printSubtitle("Exceptions");
+  try {
+    std::cout << "a1[0]: " << a1[0] << std::endl;
+    std::cout << "a1[1]: " << a1[1] << std::endl;
+    std::cout << "a1[2]: " << a1[2] << std::endl;
+    std::cout << "a1[3]: " << a1[3] << std::endl;
+    std::cout << "a1[4]: " << a1[4] << std::endl;
+    std::cout << "a1[5]: " << a1[5] << std::endl;
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+
+  try {
+    std::cout << "a1[0] = \"hello\";" << std::endl;
+    a1[0] = "hello";
+    std::cout << "a1[1] = \"world\";" << std::endl;
+    a1[1] = "world";
+    std::cout << "a1[2] = \"HELLO\";" << std::endl;
+    a1[2] = "HELLO";
+    std::cout << "a1[3] = \"WORLD\";" << std::endl;
+    a1[3] = "WORLD";
+    std::cout << "a1[4] = \"42\";" << std::endl;
+    a1[4] = "42";
+    std::cout << "a1[5] = \"!\";" << std::endl;
+    a1[5] = "!";
+  } catch (std::exception& e) {
+    std::cout << "Exception: " << e.what() << std::endl;
+  }
+}
+
 int main(void) {
-  testArray();
+  testArrayInt();
   testArrayString();
+  testConstArrayInt();
+  testArrayConstCharPointer();
   return 0;
 }
